@@ -19,9 +19,9 @@ func setUp() {
 func main() {
 	setUp()
 	// Replace the wallet addresses and private key with the actual values
-	privateKey := ""
-	fromAddress := ""
-	toAddress := ""
+	privateKey := "47acca3128a6e46469fa867a2d7d01a3b7fdb1349c6dba74967a669df2ad1de9"
+	fromAddress := "0x0c003e08f98748cb4ff3fe3abe88b11ed4c64add"
+	toAddress := "0x3f00b9c2c1d3548e0d2afdc96d6cd620c1b4a7bc"
 
 	// Get the balance of the from address
 	balance, err := getBalance(fromAddress)

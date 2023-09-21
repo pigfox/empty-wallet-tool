@@ -44,20 +44,22 @@ func transferFunds(fromPrivateKey, toAddress string) error {
 		return fmt.Errorf("failed to get balance: %v", err)
 	}
 
-	// Set the transfer amount to the available balance
-	amount := new(big.Int).Set(balance)
-
 	// Define the gas limit
 	gasLimit := uint64(21000) // Example gas limit value, adjust according to your needs
 
 	// Convert the recipient's address to a common.Address
 	toAddressObj := common.HexToAddress(toAddress)
 
+	gasPrice.SetString(gasPrice.String(), 10) // Replace "1000000000" with your gasPrice value
+	gasLimitBig := new(big.Int).SetUint64(gasLimit)
+	cost := new(big.Int).Mul(gasPrice, gasLimitBig)
+	sendAmount := new(big.Int).Sub(balance, cost)
+
 	// Create the unsigned transaction with the updated recipient's address
 	tx := types.NewTx(&types.LegacyTx{
 		Nonce:    nonce,
 		To:       &toAddressObj,
-		Value:    amount,
+		Value:    sendAmount,
 		GasPrice: gasPrice,
 		Gas:      gasLimit,
 		Data:     nil,

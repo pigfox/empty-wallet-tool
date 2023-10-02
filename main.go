@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"log"
+	"math/big"
 	"os"
 )
 
@@ -29,8 +31,15 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	log.Printf("Balance of %s: %s ETH", fromAddress, balance)
+
+	zero := big.NewInt(0)
+	comparison := balance.Cmp(zero)
+
+	if comparison == 0 {
+		fmt.Println("Quitting...")
+		return
+	}
 
 	// Transfer all funds from the from address to the to address
 	err = transferFunds(privateKey, toAddress)

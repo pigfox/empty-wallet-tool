@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"log"
 	"math/big"
@@ -21,10 +20,10 @@ func setUp() {
 func main() {
 	setUp()
 	// Replace the wallet addresses and private key with the actual values
-	privateKey := ""
-	fromAddress := ""
+	privateKey := "02198d878891ee72bca881660a25f82c877f237aa713be1657965f4646fa1489"
+	fromAddress := "0x3b9359c491d65f7b50cfe8ca8417c424a1229748"
 	//destination wallet
-	toAddress := ""
+	toAddress := "0x6b25765e09a303294649a190c436e3317c2fa56b"
 
 	// Get the balance of the from address
 	balance, err := getBalance(fromAddress)
@@ -37,8 +36,7 @@ func main() {
 	comparison := balance.Cmp(zero)
 
 	if comparison == 0 {
-		fmt.Println("Quitting...")
-		return
+		adios()
 	}
 
 	// Transfer all funds from the from address to the to address
@@ -48,6 +46,7 @@ func main() {
 	}
 
 	log.Printf("Funds transferred from %s to %s", fromAddress, toAddress)
+	adios()
 }
 
 func getConnection() {
@@ -56,4 +55,9 @@ func getConnection() {
 		log.Fatal(err)
 	}
 	connection = client
+}
+
+func adios() {
+	log.Fatal("Adios")
+	os.Exit(0)
 }
